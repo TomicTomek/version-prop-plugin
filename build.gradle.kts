@@ -48,7 +48,10 @@ gradlePlugin {
             tags = listOf("version", "properties")
             implementationClass = "pl.tomasz.jokiel.VersionPropPlugin"
             displayName = "Version from property file"
-            description = "The util to easily define the app version in the property file."
+            description = "The util to easily define the app version in the property file. " +
+                    "Create `version.properties` file at project root level (default) with following properties:" +
+                    " `version.code`, `version.major`, `version.minor`, `version.patch`. " +
+                    "To define different properties file name or location use `versionPropDef.propertyFile`."
         }
     }
 }
@@ -87,14 +90,16 @@ publishing {
 afterEvaluate {
     tasks.withType(GenerateMavenPom::class.java) {
         doFirst {
-            println("doFirst")
             with(pom) {
                 name = "Version from property file"
-                description = "The util to easily define the app version in the property file."
+                description = "The util to easily define the app version in the property file. " +
+                        "Create `version.properties` file at project root level (default) with following properties:" +
+                        " `version.code`, `version.major`, `version.minor`, `version.patch`. " +
+                        "To define different properties file name or location use `versionPropDef.propertyFile`."
                 url = "https://github.com/TomicTomek/version-prop-plugin/"
                 scm {
-                    connection = "scm:git:https://github.com/TomicTomek/version-prop-plugin/"
-                    developerConnection = "scm:git:https://github.com/TomicTomek/version-prop-plugin/"
+                    connection = "scm:git:https://github.com/TomicTomek/version-prop-plugin.git"
+                    developerConnection = "scm:git:https://github.com/TomicTomek/version-prop-plugin.git"
                     url = "https://github.com/TomicTomek/version-prop-plugin/"
                 }
                 licenses {
