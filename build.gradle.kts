@@ -28,7 +28,7 @@ kotlin {
     jvmToolchain(17)
 }
 
-group = "jsp.tomek"
+group = "io.github.tomictomek"
 version = "1.0.0"
 
 val githubProperties = Properties().apply {
@@ -44,7 +44,7 @@ gradlePlugin {
 
     plugins {
         create("versionFromPropertyFile") {
-            id = "jsp.tomek.version-prop"
+            id = "io.github.tomictomek.version-prop"
             tags = listOf("version", "properties")
             implementationClass = "pl.tomasz.jokiel.VersionPropPlugin"
             displayName = "Version from property file"
@@ -80,6 +80,37 @@ publishing {
         maven {
             name = "Local"
             url = uri(layout.buildDirectory.dir("local-repo"))
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.withType(GenerateMavenPom::class.java) {
+        doFirst {
+            println("doFirst")
+            with(pom) {
+                name = "Version from property file"
+                description = "The util to easily define the app version in the property file."
+                url = "https://github.com/TomicTomek/version-prop-plugin/"
+                scm {
+                    connection = "scm:git:https://github.com/TomicTomek/version-prop-plugin/"
+                    developerConnection = "scm:git:https://github.com/TomicTomek/version-prop-plugin/"
+                    url = "https://github.com/TomicTomek/version-prop-plugin/"
+                }
+                licenses {
+                    license {
+                        name = "GPL-3.0 license"
+                        url = "https://www.gnu.org/licenses/gpl-3.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "tjokiel"
+                        name = "Tomasz Jokiel"
+                        email = "tomasz.jokiel@gmail.com"
+                    }
+                }
+            }
         }
     }
 }
